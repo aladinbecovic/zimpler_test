@@ -1,11 +1,13 @@
 package customers
 
-type TopCustomers struct {
-	Customers []*Customer
-}
+type TopCustomers []*Customer
 
 type Customer struct {
 	Name           string `json:"name"`
 	FavouriteSnack string `json:"favouriteSnack"`
-	TotalSnacks    int32  `json:"totalSnacks"`
+	TotalSnacks    int    `json:"totalSnacks"`
+}
+
+func New() *TopCustomers {
+	return &TopCustomers{}
 }
