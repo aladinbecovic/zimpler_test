@@ -3,23 +3,24 @@ package file
 import (
 	"encoding/json"
 	"github.com/aladinbecovic/zimpler_test/customers"
+	"io/ioutil"
 	"os"
 )
 
-type File struct {
+type FileStorage struct {
 	*os.File
 }
 
-func New() (*File, error) {
-	f, err := os.OpenFile("fileStorage.json", os.O_RDWR|os.O_CREATE, 0755)
+func New() (*FileStorage, error) {
+	f, err := os.OpenFile("fileStorage.json", os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return nil, err
 	}
 
-	return &File{f}, nil
+	return &FileStorage{f}, nil
 }
 
-func (f *File) SaveData(tc *customers.TopCustomers) error {
+func (f *FileStorage) SaveData(tc *customers.TopCustomers) error {
 	jsonData, err := json.MarshalIndent(tc, "", " ")
 	if err != nil {
 		return err
@@ -33,14 +34,16 @@ func (f *File) SaveData(tc *customers.TopCustomers) error {
 	return nil
 }
 
-func (f *File) LoadData() error {
-
-	return nil
-}
-
-func (f *File) Close() error {
-	if err := f.Close(); err != nil {
+func (f *FileStorage) LoadData(tc *customers.TopCustomers) error {
+	fRes, err := ioutil.ReadFile(f.Name())
+	if err != nil {
 		return err
 	}
+
+	err = json.Unmarshal(fRes, &tc)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
