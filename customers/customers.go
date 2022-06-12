@@ -14,14 +14,14 @@ func New() *TopCustomers {
 
 func (tc *TopCustomers) SortTopCustomers() {
 	for i := 0; i < len(*tc); i++ {
-		min_idx := i
+		minIdx := i
 		for j := i + 1; j < len(*tc); j++ {
 			if (*tc)[i].TotalSnacks < (*tc)[j].TotalSnacks {
-				min_idx = j
+				minIdx = j
 
 				tmp := (*tc)[i]
-				(*tc)[i] = (*tc)[min_idx]
-				(*tc)[min_idx] = tmp
+				(*tc)[i] = (*tc)[minIdx]
+				(*tc)[minIdx] = tmp
 			}
 		}
 	}
