@@ -1,16 +1,27 @@
 package main
 
 import (
-	"fmt"
 	"github.com/aladinbecovic/zimpler_test/customers"
 	"github.com/aladinbecovic/zimpler_test/scrape"
+	"github.com/aladinbecovic/zimpler_test/storage/file"
+	"log"
 )
 
 func main() {
+	f, err := file.New()
+	if err != nil {
+		log.Fatal(err)
+	}
 	tc := customers.New()
 
-	scrape.ExtractTopCustomerTableData(tc)
+	if err := scrape.ExtractTopCustomerTableData(tc); err != nil {
+		log.Fatal(err)
+	}
+	tc.SortTopCustomers()
 
-	fmt.Println("hello")
+	if err := f.SaveData(tc); err != nil {
+		log.Fatal(err)
+	}
 
+	f.Close()
 }

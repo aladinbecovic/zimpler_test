@@ -1,7 +1,6 @@
 package file_test
 
 import (
-	"fmt"
 	"github.com/aladinbecovic/zimpler_test/customers"
 	"github.com/aladinbecovic/zimpler_test/storage/file"
 	"testing"
@@ -32,6 +31,4 @@ func TestFileStorage_LoadData(t *testing.T) {
 	if err := f.LoadData(tc); err != nil {
 		t.Error(err)
 	}
-
-	fmt.Println(tc)
 }
